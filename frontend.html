@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Debatetrix AI | Debates End. Facts Begin.</title>
+  <style>
+    :root {
+      --bg: #070a12;
+      --panel: rgba(255, 255, 255, 0.08);
+      --panel-strong: rgba(255, 255, 255, 0.13);
+      --line: rgba(255, 255, 255, 0.16);
+      --text: #f7f8ff;
+      --muted: #d0dbf5;
+      --cyan: #1ee3cf;
+      --pink: #ff477e;
+      --yellow: #ffd166;
+      --green: #7cffb2;
+      --shadow: 0 22px 80px rgba(0, 0, 0, 0.34);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(30, 227, 207, 0.2), transparent 28rem),
+        radial-gradient(circle at 86% 4%, rgba(255, 71, 126, 0.2), transparent 30rem),
+        linear-gradient(135deg, #070a12 0%, #101626 48%, #09111f 100%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 22px 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+    }
+
+    .logo-mark {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      color: #07101d;
+      background: linear-gradient(135deg, var(--cyan), var(--pink));
+      box-shadow: 0 0 36px rgba(30, 227, 207, 0.28);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 16px;
+      border: 1px solid rgba(30, 227, 207, 0.45);
+      border-radius: 8px;
+      color: #06101c;
+      background: linear-gradient(135deg, var(--cyan), var(--pink));
+      font-weight: 850;
+      box-shadow: 0 16px 44px rgba(255, 71, 126, 0.22);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+      gap: 34px;
+      align-items: center;
+      padding: 46px 0 32px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.06);
+      font-size: 13px;
+    }
+
+    h1 {
+      margin: 16px 0 16px;
+      max-width: 760px;
+      font-size: clamp(44px, 7vw, 86px);
+      line-height: 0.94;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 690px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.65;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .ghost {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--line);
+      box-shadow: none;
+    }
+
+    .console {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(4, 8, 18, 0.72);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .console-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .dots {
+      display: flex;
+      gap: 7px;
+    }
+
+    .dots span {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--pink);
+    }
+
+    .dots span:nth-child(2) {
+      background: var(--yellow);
+    }
+
+    .dots span:nth-child(3) {
+      background: var(--cyan);
+    }
+
+    .console-body {
+      padding: 18px;
+    }
+
+    .claim-box {
+      border: 1px solid rgba(30, 227, 207, 0.28);
+      border-radius: 8px;
+      padding: 14px;
+      background: rgba(30, 227, 207, 0.08);
+    }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    .mini {
+      min-height: 84px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .mini strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--green);
+      font-size: 22px;
+    }
+
+    .feed-item {
+      margin-top: 10px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .tag {
+      display: inline-flex;
+      margin: 3px 4px 3px 0;
+      padding: 4px 8px;
+      border-radius: 999px;
+      color: #ffffff;
+      border: 1px solid rgba(30, 227, 207, 0.32);
+      background: rgba(30, 227, 207, 0.11);
+      font-size: 12px;
+    }
+
+    .section {
+      padding: 40px 0;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing: 0;
+    }
+
+    .muted {
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .card {
+      min-height: 210px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.18);
+    }
+
+    .card h3 {
+      margin: 12px 0 8px;
+      font-size: 19px;
+    }
+
+    .icon {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      color: #06101c;
+      background: var(--cyan);
+      font-weight: 900;
+    }
+
+    .source-wall {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+
+    .source {
+      padding: 12px;
+      min-height: 78px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .source strong {
+      display: block;
+      color: var(--text);
+      margin-bottom: 5px;
+    }
+
+    .search-panel {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-strong);
+    }
+
+    input {
+      width: 100%;
+      min-height: 46px;
+      padding: 0 14px;
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      outline: none;
+      background: rgba(255, 255, 255, 0.08);
+      font: inherit;
+    }
+
+    .footer {
+      padding: 36px 0 46px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .cards,
+      .source-wall {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .shell {
+        width: min(100% - 22px, 1180px);
+      }
+
+      .status-grid,
+      .cards,
+      .source-wall,
+      .search-panel {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 44px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="shell nav">
+    <a class="logo" href="#">
+      <span class="logo-mark">DT</span>
+      <span>Debatetrix AI</span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#verify">Verify</a>
+      <a href="#features">Features</a>
+      <a href="#sources">Sources</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="shell hero">
+      <div>
+        <span class="eyebrow">AI Fact Intelligence • Rivalry Analysis • Viral Claim Research</span>
+        <h1>Debates End. Facts Begin.</h1>
+        <p class="lead">
+          A bold AI-powered frontend for checking viral claims, comparing controversies, tracking fact-check sources,
+          and turning noisy debates into transparent evidence.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="#verify">Start Verification</a>
+          <a class="button ghost" href="#sources">View Trusted Sources</a>
+        </div>
+      </div>
+
+      <aside class="console" aria-label="Debatetrix verification preview">
+        <div class="console-top">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <span>Verification Console</span>
+        </div>
+        <div class="console-body">
+          <div class="claim-box">
+            <span class="tag">Viral Claim</span>
+            <strong>“A trending post claims a new policy gives every student Rs 25,000.”</strong>
+          </div>
+          <div class="status-grid">
+            <div class="mini"><strong>78%</strong><span class="muted">Evidence Needed</span></div>
+            <div class="mini"><strong>20</strong><span class="muted">Trusted Sources</span></div>
+            <div class="mini"><strong>LOCAL</strong><span class="muted">Inference Mode</span></div>
+          </div>
+          <div class="feed-item">
+            <span class="tag">PIB</span>
+            <span class="tag">Alt News</span>
+            <span class="tag">BOOM</span>
+            <p class="muted">Cross-check against official records, fact-check databases, and independent reporting before declaring a verdict.</p>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="shell section" id="verify">
+      <div class="section-head">
+        <div>
+          <h2>Claim Checker UI</h2>
+          <p class="muted">Paste a claim and route it to the Debatetrix backend, trusted sources, and evidence search.</p>
+        </div>
+      </div>
+      <div class="search-panel">
+        <input id="claimInput" type="text" placeholder="Paste a claim, debate point, controversy, or viral post">
+        <button class="button" type="button" onclick="analyzeClaim()">Analyze</button>
+      </div>
+      <p id="claimResult" class="muted">Result preview will appear here.</p>
+    </section>
+
+    <section class="shell section" id="features">
+      <div class="section-head">
+        <div>
+          <h2>Built For High-Speed Truth</h2>
+          <p class="muted">A frontend made for fact-checking, debate research, social media claims, sports comparisons, and controversy timelines.</p>
+        </div>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="icon">01</div>
+          <h3>Fact Verification</h3>
+          <p class="muted">Classifies claims as verified, disputed, false, unverified, or partially verified with confidence scoring.</p>
+        </article>
+        <article class="card">
+          <div class="icon">02</div>
+          <h3>Intel Feed</h3>
+          <p class="muted">Connects to public fact-check feeds and keeps trusted-source research searchable.</p>
+        </article>
+        <article class="card">
+          <div class="icon">03</div>
+          <h3>Rivalry Analysis</h3>
+          <p class="muted">Compares people, teams, narratives, and controversies with neutral evidence framing.</p>
+        </article>
+        <article class="card">
+          <div class="icon">04</div>
+          <h3>Transparency</h3>
+          <p class="muted">Shows inference source, evidence count, source count, confidence, and timestamp instead of hiding uncertainty.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="shell section" id="sources">
+      <div class="section-head">
+        <div>
+          <h2>Trusted Source Network</h2>
+          <p class="muted">India and global fact-checking sources used for routing, search, and evidence discovery.</p>
+        </div>
+      </div>
+      <div class="source-wall">
+        <a class="source" href="https://www.altnews.in/" target="_blank"><strong>Alt News</strong>India</a>
+        <a class="source" href="https://www.pib.gov.in/factcheck.aspx" target="_blank"><strong>PIB Fact Check</strong>India</a>
+        <a class="source" href="https://factly.in/" target="_blank"><strong>Factly</strong>India</a>
+        <a class="source" href="https://www.boomlive.in/fact-check" target="_blank"><strong>BOOM Live</strong>India</a>
+        <a class="source" href="https://www.thequint.com/news/webqoof" target="_blank"><strong>WebQoof</strong>India</a>
+        <a class="source" href="https://www.indiatoday.in/fact-check" target="_blank"><strong>India Today</strong>India</a>
+        <a class="source" href="https://newschecker.in/" target="_blank"><strong>NewsChecker</strong>India</a>
+        <a class="source" href="https://www.vishvasnews.com/" target="_blank"><strong>Vishvas News</strong>India</a>
+        <a class="source" href="https://factcheck.afp.com/" target="_blank"><strong>AFP Fact Check</strong>Global</a>
+        <a class="source" href="https://dfrac.org/" target="_blank"><strong>DFRAC</strong>India</a>
+        <a class="source" href="https://toolbox.google.com/factcheck/explorer" target="_blank"><strong>Google Explorer</strong>Global</a>
+        <a class="source" href="https://www.snopes.com/" target="_blank"><strong>Snopes</strong>Global</a>
+        <a class="source" href="https://www.politifact.com/" target="_blank"><strong>PolitiFact</strong>Global</a>
+        <a class="source" href="https://www.factcheck.org/" target="_blank"><strong>FactCheck.org</strong>Global</a>
+        <a class="source" href="https://www.reuters.com/fact-check/" target="_blank"><strong>Reuters</strong>Global</a>
+        <a class="source" href="https://apnews.com/hub/ap-fact-check" target="_blank"><strong>AP Fact Check</strong>Global</a>
+        <a class="source" href="https://fullfact.org/" target="_blank"><strong>Full Fact</strong>UK</a>
+        <a class="source" href="https://leadstories.com/" target="_blank"><strong>Lead Stories</strong>Global</a>
+        <a class="source" href="https://www.washingtonpost.com/news/fact-checker/" target="_blank"><strong>Washington Post</strong>Global</a>
+        <a class="source" href="https://www.poynter.org/ifcn/" target="_blank"><strong>Poynter IFCN</strong>Global</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="shell footer">
+    <strong>Debatetrix AI</strong>
+    <p>Evidence over opinion. Verification over virality. Transparency over narrative.</p>
+  </footer>
+
+  <script>
+    function analyzeClaim() {
+      const input = document.getElementById("claimInput");
+      const result = document.getElementById("claimResult");
+      const text = input.value.trim();
+
+      if (!text) {
+        result.textContent = "Paste a claim first. Debatetrix needs text to classify and route evidence.";
+        return;
+      }
+
+      const riskyWords = ["viral", "breaking", "fake", "secret", "shocking", "guaranteed", "always", "never"];
+      const riskHits = riskyWords.filter((word) => text.toLowerCase().includes(word)).length;
+      const status = riskHits > 1 ? "DISPUTED" : riskHits === 1 ? "UNVERIFIED" : "PARTIALLY VERIFIED";
+
+      result.innerHTML = "<strong>Verification Status: " + status + "</strong><br>" +
+        "Use Debatetrix for full source routing, confidence score, evidence review, and transparency panel.";
+    }
+  </script>
+</body>
+</html>
